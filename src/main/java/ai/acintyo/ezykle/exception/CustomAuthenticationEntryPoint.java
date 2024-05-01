@@ -1,0 +1,32 @@
+package ai.acintyo.ezykle.exception;
+
+import java.io.IOException;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException authException) throws IOException, ServletException {
+	
+		 response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+	        // Set the response content type
+	        response.setContentType("application/json");
+
+	        // You can customize the response body as needed
+	        String responseBody = "{\"error\": \"Unauthorized\", \"message\": \"Authentication is required to access this resource\"}";
+
+	        // Write the response body
+	        response.getWriter().write(responseBody);
+		
+	}
+
+}
